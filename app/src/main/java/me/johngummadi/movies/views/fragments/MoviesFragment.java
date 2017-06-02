@@ -44,8 +44,19 @@ public class MoviesFragment
     List<Movie> _movies = new ArrayList<>();
     MovieAdapter _adapter;
 
+    // This is listener for Fragment events that Activity might be interested in
+    public interface Listener {
+        void onMovieSelected(Movie movie);
+        // TODO: Add more events as needed
+    }
+
+    Listener _listener;
+
     public MoviesFragment() {
-        // Required empty public constructor
+    }
+
+    public void setListener(Listener listener) {
+        _listener = listener;
     }
 
     @Override
@@ -69,7 +80,9 @@ public class MoviesFragment
         public void onClick(int pos, View itemView) {
             Movie movie = _movies.get(pos);
             Toast.makeText(getContext(), movie.getTitle() + "\n\n" + movie.getOverview(), Toast.LENGTH_SHORT).show();
-            // TODO - open Movie detail view
+            if (_listener != null) {
+                _listener.onMovieSelected(movie);
+            }
         }
     };
 

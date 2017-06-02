@@ -1,5 +1,8 @@
 package me.johngummadi.movies.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -10,7 +13,7 @@ import me.johngummadi.movies.utils.ImageSize;
  * Created by johngummadi on 5/31/17.
  */
 
-public class Movie {
+public class Movie implements Parcelable {
     public static String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
 
     @SerializedName("poster_path")
@@ -86,4 +89,53 @@ public class Movie {
     @SerializedName("vote_average")
     private double _voteAverage;
     public double getVoteAverage() { return _voteAverage; }
+
+    protected Movie(Parcel in) {
+        _adult = in.readByte() != 0x00;
+        _overview = in.readString();
+        _releaseDate = in.readString();
+        _id = in.readInt();
+        _originalTitle = in.readString();
+        _originalLanguage = in.readString();
+        _title = in.readString();
+        _backdropPath = in.readString();
+        _popularity = in.readDouble();
+        _voteCount = in.readInt();
+        _video = in.readByte() != 0x00;
+        _voteAverage = in.readDouble();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (_adult ? 0x01 : 0x00));
+        dest.writeString(_overview);
+        dest.writeString(_releaseDate);
+        dest.writeInt(_id);
+        dest.writeString(_originalTitle);
+        dest.writeString(_originalLanguage);
+        dest.writeString(_title);
+        dest.writeString(_backdropPath);
+        dest.writeDouble(_popularity);
+        dest.writeInt(_voteCount);
+        dest.writeByte((byte) (_video ? 0x01 : 0x00));
+        dest.writeDouble(_voteAverage);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }

@@ -22,5 +22,6 @@
     <dimen name="poster_thumb_right_margin">10dp</dimen>
     <dimen name="progressbar_height">50dp</dimen>
     <dimen name="progressbar_height_small">30dp</dimen>
+    <dimen name="movie_list_width_tablet">300dp</dimen>
 
 </resources>

@@ -10,8 +10,16 @@
     <fragment
         class="me.johngummadi.movies.views.fragments.MoviesFragment"
         android:id="@+id/movie_list_fragment"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/movie_list_width_tablet"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_movies" />
+
+    <fragment
+        class="me.johngummadi.movies.views.fragments.MovieDetailsFragment"
+        android:id="@+id/movie_details_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/movie_list_fragment"
+        tools:layout="@layout/fragment_movie_details" />
 
 </RelativeLayout>

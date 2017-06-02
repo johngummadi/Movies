@@ -2,18 +2,22 @@ package me.johngummadi.movies.views;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import me.johngummadi.movies.R;
+import me.johngummadi.movies.models.Movie;
+import me.johngummadi.movies.views.fragments.MovieDetailsFragment;
 import me.johngummadi.movies.views.fragments.MoviesFragment;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements MoviesFragment.Listener, MovieDetailsFragment.Listener {
     //@BindView(R.id.svSearchMoviesView) SearchView _svSearchMoviesView;
 
     MoviesFragment _moviesFragment;
+    MovieDetailsFragment _movieDetailsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,37 +28,31 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         FragmentManager fragmentManager = getSupportFragmentManager();
+        _moviesFragment = (MoviesFragment) fragmentManager.findFragmentById(R.id.movie_list_fragment);
+        _moviesFragment.setListener(this);
+
+        _movieDetailsFragment = (MovieDetailsFragment) fragmentManager.findFragmentById(R.id.movie_details_fragment);
+        if (_movieDetailsFragment != null) {
+            _movieDetailsFragment.setListener(this);
+        }
+
+        /*
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         _moviesFragment = new MoviesFragment();
         fragmentTransaction.add(R.id.moviesFragmentContainer, _moviesFragment, "Movies");
         fragmentTransaction.commit();
+        */
         //initSearchView();
     }
 
-//    private void initSearchView() {
-//        _svSearchMoviesView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                /**
-//                 * TODO: This is little weird now. Rethink this.
-//                 * I had to put the SearchView in the Activity instead of Fragment because I
-//                 * wanted to put the search on Actionbar to allow for clipping of Actionbar.
-//                 * So for now, I am sending this event to the MoviesFragment (which implements
-//                 * IMovieView) and from there the MoviesFragment will pass that over to the presenter.
-//                 * Little round about, but for now it works. Need to rethink this.
-//                 */
-//                _moviesFragment.onSearchRequested(query);
-//                _svSearchMoviesView.clearFocus();
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
-//
-//        // TODO: Disabling voice for now
-//        _svSearchMoviesView.setVoice(false);
-//    }
+    @Override
+    public void onMovieSelected(Movie movie) {
+        if (_movieDetailsFragment != null) {
+            // This is a tablet, show the details on the side pane
+            _movieDetailsFragment.update(movie);
+        }
+        else {
+            MovieDetailsActivity.launch(movie, this);
+        }
+    }
 }

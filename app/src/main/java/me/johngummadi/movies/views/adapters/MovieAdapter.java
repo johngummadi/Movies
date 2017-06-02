@@ -1,5 +1,6 @@
 package me.johngummadi.movies.views.adapters;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,10 +53,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(final MovieViewHolder holder, int position) {
         Movie movie = _data.get(position);
 
-        Glide.with(holder.itemView.getContext())
-                .load(movie.getPosterPathFull())
-                .placeholder(R.drawable.ic_movie)
-                .into(holder._ivPosterThumb);
+        // NOTE: In tablet we're not showing poster image in the list.
+        if (holder._ivPosterThumb != null) {
+            Glide.with(holder.itemView.getContext())
+                    .load(movie.getPosterPathFull())
+                    .placeholder(R.drawable.ic_movie)
+                    .into(holder._ivPosterThumb);
+        }
 
         holder._tvMovieTitle.setText(movie.getTitle());
         holder._tvMovieOverview.setText(movie.getOverview());
@@ -79,7 +83,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.ivPosterThumb) ImageView _ivPosterThumb;
+        @Nullable @BindView(R.id.ivPosterThumb) ImageView _ivPosterThumb;
         @BindView(R.id.tvMovieTitle) TextView _tvMovieTitle;
         @BindView(R.id.tvMovieOverview) TextView _tvMovieOverview;
         @BindView(R.id.rbMovieRating) RatingBar _rbMovieRating;
