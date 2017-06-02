@@ -22,11 +22,23 @@ import me.johngummadi.movies.models.Movie;
  */
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+    /**
+     * NOTE: that I am using custom listener interface.
+     * Otherwise we'll have to use View.OnClickListener which
+     * is little tricky for the users of this adapter to understand.
+     * This just simplifies things.
+     * TODO: See if there are better ways
+     */
+    public interface OnItemClickListener {
+        void onClick(int pos, View itemView);
+    }
 
     List<Movie> _data;
+    OnItemClickListener _itemClickListener;
 
-    public MovieAdapter(List<Movie> data) {
+    public MovieAdapter(List<Movie> data, MovieAdapter.OnItemClickListener itemClickListener) {
         _data = data;
+        _itemClickListener = itemClickListener;
     }
 
     @Override
@@ -53,6 +65,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             public void onClick(View v) {
                 final int pos = holder.getAdapterPosition();
                 MovieAdapter.this.notifyItemChanged(pos, "payload " + pos);
+                if (_itemClickListener != null) {
+                    _itemClickListener.onClick(pos, v);
+                }
             }
         });
 

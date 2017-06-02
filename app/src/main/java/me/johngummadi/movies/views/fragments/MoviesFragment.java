@@ -25,7 +25,6 @@ import me.johngummadi.movies.models.Movie;
 import me.johngummadi.movies.presenters.IMoviesPresenter;
 import me.johngummadi.movies.presenters.MoviesPresenter;
 import me.johngummadi.movies.views.IMoviesView;
-import me.johngummadi.movies.views.SearchListener;
 import me.johngummadi.movies.views.adapters.MovieAdapter;
 
 /**
@@ -33,7 +32,7 @@ import me.johngummadi.movies.views.adapters.MovieAdapter;
  */
 public class MoviesFragment
         extends MvpFragment<IMoviesView, IMoviesPresenter>
-        implements IMoviesView, SearchListener
+        implements IMoviesView
 {
     @BindView(R.id.svSearchMoviesView) SearchView _svSearchMoviesView;
     @BindView(R.id.rvMovies) RecyclerView _rvMovies;
@@ -65,8 +64,17 @@ public class MoviesFragment
         initSearchView();
     }
 
+    MovieAdapter.OnItemClickListener _itemClickListener = new MovieAdapter.OnItemClickListener() {
+        @Override
+        public void onClick(int pos, View itemView) {
+            Movie movie = _movies.get(pos);
+            Toast.makeText(getContext(), movie.getTitle() + "\n\n" + movie.getOverview(), Toast.LENGTH_SHORT).show();
+            // TODO - open Movie detail view
+        }
+    };
+
     private void initList() {
-        _adapter = new MovieAdapter(_movies);
+        _adapter = new MovieAdapter(_movies, _itemClickListener);
         _rvMovies.setAdapter(_adapter);
         _layoutManager = new LinearLayoutManager(getContext());
         _rvMovies.setLayoutManager(_layoutManager);
@@ -117,11 +125,6 @@ public class MoviesFragment
     @Override
     public IMoviesPresenter createPresenter() {
         return new MoviesPresenter();
-    }
-
-    @Override
-    public void onSearchRequested(String query) {
-        getPresenter().searchButtonClicked(query);
     }
 
     @Override

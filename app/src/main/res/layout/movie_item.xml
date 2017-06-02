@@ -21,7 +21,6 @@
             android:id="@+id/ivPosterThumb"
             android:layout_width="@dimen/poster_thumb_width"
             android:layout_height="@dimen/poster_thumb_height"
-            android:src="@drawable/ic_movie"
             android:layout_marginRight="@dimen/poster_thumb_right_margin"
             android:background="@color/grayLight"/>
 
