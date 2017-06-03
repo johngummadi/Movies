@@ -35,19 +35,16 @@ public class MainActivity extends AppCompatActivity
         if (_movieDetailsFragment != null) {
             _movieDetailsFragment.setListener(this);
         }
-
-        /*
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        _moviesFragment = new MoviesFragment();
-        fragmentTransaction.add(R.id.moviesFragmentContainer, _moviesFragment, "Movies");
-        fragmentTransaction.commit();
-        */
-        //initSearchView();
     }
 
     @Override
     public void onMovieSelected(Movie movie) {
-        if (_movieDetailsFragment != null) {
+        /**
+         * TODO: This should go back to the presenter and the
+         * preserter should decide what to do with the movie selection.
+         * For the lack of time, I just hacked this up.
+         */
+        if (_movieDetailsFragment != null && _movieDetailsFragment.isAdded()) {
             // This is a tablet, show the details on the side pane
             _movieDetailsFragment.update(movie);
         }

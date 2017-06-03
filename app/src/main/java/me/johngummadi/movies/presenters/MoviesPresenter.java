@@ -1,7 +1,6 @@
 package me.johngummadi.movies.presenters;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
-
 import me.johngummadi.movies.retrofit.MoviesSearchResponse;
 import me.johngummadi.movies.retrofit.RestClient;
 import me.johngummadi.movies.views.IMoviesView;
@@ -30,19 +29,24 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
     }
 
     @Override
-    public void searchButtonClicked(String query) {
+    public void searchButtonClicked() {
         if (isViewAttached()) {
-            _query = query;
             hideAllSpinners();
             // Validate the query string
             if (_query==null || _query.length() < MIN_QUERY_LEN) {
                 getView().displayError("Invalid query. Please type at-least three characters");
                 return;
             }
+            _page = 1; //reset page.
             getView().clear();
             getView().showLoadingSpinner(true);
-            searchMovies(query);
+            searchMovies(_query);
         }
+    }
+
+    @Override
+    public void setSearchQuery(String query) {
+        _query = query;
     }
 
     @Override
@@ -82,7 +86,10 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
             @Override
             public void onResponse(Call<MoviesSearchResponse> call, Response<MoviesSearchResponse> response) {
                 if (isViewAttached()) {
-                    getView().displayMovies(response.body().getResults());
+                    // NOTE: For some reason even errors are coming to onResponse where body is null. Therefore this check.
+                    if (response!=null && response.body()!=null) {
+                        getView().displayMovies(response.body().getResults());
+                    }
                     hideAllSpinners();
                 }
             }

@@ -8,7 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.johngummadi.movies.R;
@@ -18,8 +22,14 @@ import me.johngummadi.movies.models.Movie;
  * A simple {@link Fragment} subclass.
  */
 public class MovieDetailsFragment extends Fragment {
-    @BindView(R.id.ivBackdropImage) ImageView _ivBackdropImage;
+    private final String ARG_MOVIE = "movie";
+    Movie _movie;
+
+    @BindView(R.id.ivMovieDetailPosterImage) ImageView _ivMovieDetailPosterImage;
     @BindView(R.id.tvMovieDetailTitle) TextView _tvMovieDetailTitle;
+    @BindView(R.id.tvMovieDetailReleaseDate) TextView _tvMovieDetailReleaseDate;
+    @BindView(R.id.rbMovieDetailRating) RatingBar _rbMovieDetailRating;
+    @BindView(R.id.tvMovieDetailOverview) TextView _tvMovieDetailOverview;
 
     // This is listener for Fragment events that Activity might be interested in
     public interface Listener {
@@ -49,8 +59,35 @@ public class MovieDetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(ARG_MOVIE, _movie);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState == null)
+            return;
+        _movie = savedInstanceState.getParcelable(ARG_MOVIE);
+        render();
+    }
+
     public void update(Movie movie) {
-        _tvMovieDetailTitle.setText(movie.getTitle());
-        // TODO: Add more details
+        _movie = movie;
+        render();
+    }
+
+    private void render() {
+        _tvMovieDetailTitle.setText(_movie.getTitle());
+        Glide.with(getContext())
+                .load(_movie.getPosterPathFull())
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.default_poster)
+                .into(_ivMovieDetailPosterImage);
+        _tvMovieDetailReleaseDate.setText("Released on: " + _movie.getReleaseDateString());
+        _tvMovieDetailOverview.setText(_movie.getOverview());
+        _rbMovieDetailRating.setRating((float) _movie.getVoteAverage()/2);
     }
 }

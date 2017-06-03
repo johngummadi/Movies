@@ -10,7 +10,7 @@
     android:layout_marginBottom="@dimen/card_margin_bottom"
     android:focusable="true"
     android:clickable="true"
-    android:background="@drawable/card_clickable_background">
+    android:background="@drawable/card_selectable_background">
 
     <RelativeLayout
         android:layout_width="match_parent"

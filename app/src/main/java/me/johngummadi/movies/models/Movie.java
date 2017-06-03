@@ -41,7 +41,8 @@ public class Movie implements Parcelable {
     @SerializedName("release_date")
     private String _releaseDate;
     public Date getReleaseDate() { return new Date(_releaseDate); }
-
+    // TODO: Use SimpleDateFormat. It was causing some crash.
+    public String getReleaseDateString() { return _releaseDate; }
 
     @SerializedName("genre_ids")
     private int[] _genreIds;
@@ -91,9 +92,11 @@ public class Movie implements Parcelable {
     public double getVoteAverage() { return _voteAverage; }
 
     protected Movie(Parcel in) {
+        _posterPath = in.readString();
         _adult = in.readByte() != 0x00;
         _overview = in.readString();
         _releaseDate = in.readString();
+        _genreIds = in.createIntArray();
         _id = in.readInt();
         _originalTitle = in.readString();
         _originalLanguage = in.readString();
@@ -112,9 +115,11 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_posterPath);
         dest.writeByte((byte) (_adult ? 0x01 : 0x00));
         dest.writeString(_overview);
         dest.writeString(_releaseDate);
+        dest.writeIntArray(_genreIds);
         dest.writeInt(_id);
         dest.writeString(_originalTitle);
         dest.writeString(_originalLanguage);

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import me.johngummadi.movies.R;
 import me.johngummadi.movies.models.Movie;
@@ -34,7 +36,22 @@ public class MovieDetailsActivity extends AppCompatActivity {
         init();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void init() {
+        // Enable back button
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         // Extract movie from the bundle
         Intent intent = getIntent();
         Movie movie = intent.getParcelableExtra(ARG_MOVIE);
