@@ -16,14 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
-//import com.lapism.searchview.SearchView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.johngummadi.movies.R;

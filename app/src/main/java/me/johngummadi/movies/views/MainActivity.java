@@ -10,7 +10,10 @@ import me.johngummadi.movies.models.Movie;
 import me.johngummadi.movies.views.fragments.MovieDetailsFragment;
 import me.johngummadi.movies.views.fragments.MoviesFragment;
 
-
+/**
+ * NOTE: I haven't added MVP here to Activity as the Fragment acts as
+ * a View and Activity is just a container here.
+ */
 public class MainActivity extends AppCompatActivity
         implements MoviesFragment.Listener, MovieDetailsFragment.Listener {
     //@BindView(R.id.svSearchMoviesView) SearchView _svSearchMoviesView;

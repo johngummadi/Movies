@@ -12,6 +12,10 @@ import me.johngummadi.movies.R;
 import me.johngummadi.movies.models.Movie;
 import me.johngummadi.movies.views.fragments.MovieDetailsFragment;
 
+/**
+ * NOTE: I haven't added MVP here to Activity as the Fragment acts as
+ * a View and Activity is just a container here.
+ */
 public class MovieDetailsActivity extends AppCompatActivity {
     public final static String ARG_MOVIE = "movie";
     MovieDetailsFragment _movieDetailsFragment;
