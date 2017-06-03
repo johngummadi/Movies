@@ -15,5 +15,9 @@ public interface IMoviesView extends MvpView {
     void displayError(String error);
     void showLoadingSpinner(boolean show);
     void showSpinnerAtBottom(boolean show);
-    void clear();
+    // This just clears the list
+    void clearList();
+    // The resetView clears both search query, and the list
+    void resetView();
+    boolean isListEmpty();
 }

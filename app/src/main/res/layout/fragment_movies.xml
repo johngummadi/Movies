@@ -7,6 +7,46 @@
     android:background="@color/grayMedium"
     tools:context="me.johngummadi.movies.views.fragments.MoviesFragment">
 
+    <RelativeLayout
+        android:id="@+id/rlEmptyStateMovies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grayMedium"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/ivEmptyStateUsersIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_search_empty_state"/>
+
+        <TextView
+            android:id="@+id/tvEmptyStateUsersText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ivEmptyStateUsersIcon"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/grayLight"
+            android:text="@string/search_empty_state_text"
+            android:textSize="22dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvDevelopedBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/grayDark"
+            android:text="@string/developed_by"
+            android:textSize="12dp"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
     <ProgressBar
         android:id="@+id/pbLoad"
         android:layout_width="wrap_content"
@@ -51,33 +91,5 @@
         app:queryHint="@string/search_movies"
         />
 
-    <RelativeLayout
-        android:id="@+id/rlEmptyStateMovies"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/svSearchMoviesView"
-        android:background="@color/grayMedium"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/ivEmptyStateUsersIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_search_empty_state"/>
-
-        <TextView
-            android:id="@+id/tvEmptyStateUsersText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ivEmptyStateUsersIcon"
-            android:layout_marginTop="40dp"
-            android:textColor="@color/grayLight"
-            android:text="@string/search_empty_state_text"
-            android:textSize="22dp"
-            android:gravity="center"/>
-
-    </RelativeLayout>
 
 </RelativeLayout>

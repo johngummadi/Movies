@@ -26,6 +26,15 @@ public class MainActivity extends AppCompatActivity
         init();
     }
 
+    @Override
+    public void onBackPressed() {
+        // Pressing back here would clear the list if list is not empty, else finish the Activity.
+        if (_moviesFragment.isListEmpty())
+            super.onBackPressed();
+        else
+            _moviesFragment.resetView();
+    }
+
     private void init() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         _moviesFragment = (MoviesFragment) fragmentManager.findFragmentById(R.id.movie_list_fragment);

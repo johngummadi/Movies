@@ -257,10 +257,20 @@ public class MoviesFragment
     }
 
     @Override
-    public void clear() {
+    public void clearList() {
         _movies.clear();
         _adapter.notifyDataSetChanged();
         showEmptyState(true);
+    }
+
+    public void resetView() {
+        _svSearchMoviesView.setQuery("", false);
+        clearList();
+    }
+
+    @Override
+    public boolean isListEmpty() {
+        return (_movies.size() == 0);
     }
 
     private void showEmptyState(boolean show) {

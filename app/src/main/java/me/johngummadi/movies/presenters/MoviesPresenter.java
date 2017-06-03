@@ -38,7 +38,7 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
                 return;
             }
             _page = 1; //reset page.
-            getView().clear();
+            getView().clearList();
             getView().showLoadingSpinner(true);
             searchMovies(_query);
         }
@@ -54,7 +54,7 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
         if (isViewAttached()) {
             reset();
             hideAllSpinners();
-            getView().clear();
+            getView().clearList();
         }
     }
 
