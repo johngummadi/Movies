@@ -4,7 +4,7 @@
     android:id="@+id/activity_movie_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.johngummadi.movies.views.MovieDetailsActivity">
+    tools:context="me.johngummadi.movies.views.activities.MovieDetailsActivity">
 
     <fragment
         class="me.johngummadi.movies.views.fragments.MovieDetailsFragment"

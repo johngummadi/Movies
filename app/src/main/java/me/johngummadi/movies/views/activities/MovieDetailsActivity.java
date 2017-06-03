@@ -1,4 +1,4 @@
-package me.johngummadi.movies.views;
+package me.johngummadi.movies.views.activities;
 
 import android.content.Context;
 import android.content.Intent;

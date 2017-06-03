@@ -1,4 +1,4 @@
-package me.johngummadi.movies.views;
+package me.johngummadi.movies.views.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
