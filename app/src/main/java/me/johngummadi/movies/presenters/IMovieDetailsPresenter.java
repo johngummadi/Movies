@@ -16,5 +16,5 @@ public interface IMovieDetailsPresenter extends MvpPresenter<IMovieDetailsView> 
      * When we add more functionality to MovieDetails view, we should apply
      * business logic to the user interactions here.
      */
-    void initialized(Movie movie);
+    void onInitialized(Movie movie);
 }

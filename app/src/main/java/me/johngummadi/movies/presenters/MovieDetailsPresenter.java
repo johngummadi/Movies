@@ -26,7 +26,7 @@ public class MovieDetailsPresenter extends MvpBasePresenter<IMovieDetailsView> i
     }
 
     @Override
-    public void initialized(Movie movie) {
+    public void onInitialized(Movie movie) {
         if (isViewAttached()) {
             if (movie != null)
                 getView().displayMovieDetails();

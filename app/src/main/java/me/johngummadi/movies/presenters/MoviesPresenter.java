@@ -1,6 +1,11 @@
 package me.johngummadi.movies.presenters;
 
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
+
+import java.util.List;
+
+import me.johngummadi.movies.R;
+import me.johngummadi.movies.models.Movie;
 import me.johngummadi.movies.retrofit.MoviesSearchResponse;
 import me.johngummadi.movies.retrofit.RestClient;
 import me.johngummadi.movies.views.IMoviesView;
@@ -16,28 +21,34 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
     private Call<MoviesSearchResponse> _searchCall;
     private String _query;
     private int _page;
+    private int _totalPages;
     private final int MIN_QUERY_LEN = 3;
 
     public MoviesPresenter() {
         _page = 1;
         _query = "";
+        _totalPages = -1;
     }
 
     private void reset() {
         _page = 1;
         _query = "";
+        _totalPages = -1;
     }
 
     @Override
-    public void searchButtonClicked() {
+    public void onSearchButtonClicked() {
         if (isViewAttached()) {
+            // We get query once here, and use it for subsequent lazy load of more movies or pull to refresh
+            _query = getView().getQueryString();
             hideAllSpinners();
             // Validate the query string
             if (_query==null || _query.length() < MIN_QUERY_LEN) {
-                getView().displayError("Invalid query. Please type at-least three characters");
+                getView().displayError(R.string.error_query_too_short);
                 return;
             }
             _page = 1; //reset page.
+            _totalPages = -1;
             getView().clearList();
             getView().showLoadingSpinner(true);
             searchMovies(_query);
@@ -45,12 +56,7 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
     }
 
     @Override
-    public void setSearchQuery(String query) {
-        _query = query;
-    }
-
-    @Override
-    public void searchCleared() {
+    public void onSearchCleared() {
         if (isViewAttached()) {
             reset();
             hideAllSpinners();
@@ -59,12 +65,15 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
     }
 
     @Override
-    public void scrolledToEnd() {
+    public void onScrolledToEnd() {
         if (isViewAttached()) {
-            hideAllSpinners();
-            getView().showSpinnerAtBottom(true);
-            _page ++;
-            searchMovies(_query);
+            // Do not attemot to load more if the current page reached the end of possible pages.
+            if (_page < _totalPages) {
+                hideAllSpinners();
+                getView().showSpinnerAtBottom(true);
+                _page++;
+                searchMovies(_query);
+            }
         }
     }
 
@@ -88,7 +97,12 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
                 if (isViewAttached()) {
                     // NOTE: For some reason even errors are coming to onResponse where body is null. Therefore this check.
                     if (response!=null && response.body()!=null) {
-                        getView().displayMovies(response.body().getResults());
+                        List<Movie> results = response.body().getResults();
+                        _totalPages = response.body().getTotalPages();
+                        if (results.size() == 0)
+                            getView().displayError(R.string.error_no_results);
+                        else
+                            getView().displayMovies(results);
                     }
                     hideAllSpinners();
                 }

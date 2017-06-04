@@ -11,7 +11,9 @@ import me.johngummadi.movies.models.Movie;
  */
 
 public interface IMoviesView extends MvpView {
+    String getQueryString();
     void displayMovies(List<Movie> movies);
+    void displayError(int resId);
     void displayError(String error);
     void showLoadingSpinner(boolean show);
     void showSpinnerAtBottom(boolean show);

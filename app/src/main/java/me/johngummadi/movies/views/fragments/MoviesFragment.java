@@ -15,17 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.johngummadi.movies.R;
 import me.johngummadi.movies.models.Movie;
 import me.johngummadi.movies.presenters.IMoviesPresenter;
 import me.johngummadi.movies.presenters.MoviesPresenter;
+import me.johngummadi.movies.utils.Utils;
 import me.johngummadi.movies.views.IMoviesView;
 import me.johngummadi.movies.views.adapters.MovieAdapter;
 
@@ -109,8 +112,6 @@ public class MoviesFragment
         // Show movies
         _adapter.notifyDataSetChanged();
         showEmptyState(false);
-
-        getPresenter().setSearchQuery(_svSearchMoviesView.getQuery().toString());
     }
 
     MovieAdapter.OnItemClickListener _itemClickListener = new MovieAdapter.OnItemClickListener() {
@@ -127,7 +128,7 @@ public class MoviesFragment
     @Override
     public void onRefresh() {
         _svSearchMoviesView.clearFocus();
-        getPresenter().searchButtonClicked();
+        getPresenter().onSearchButtonClicked();
     }
 
     private void init() {
@@ -180,7 +181,6 @@ public class MoviesFragment
         _svSearchMoviesView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getPresenter().setSearchQuery(query);
                 onRefresh();
                 return true;
             }
@@ -199,7 +199,7 @@ public class MoviesFragment
                 @Override
                 public void onClick(View view) {
                     _svSearchMoviesView.setQuery("", false);
-                    getPresenter().searchCleared();
+                    getPresenter().onSearchCleared();
                     _svSearchMoviesView.clearFocus();
                     _svSearchMoviesView.setIconified(true);
 
@@ -216,13 +216,18 @@ public class MoviesFragment
     private void sendScrollEvents() {
         int lastVisiblePos = _layoutManager.findLastCompletelyVisibleItemPosition();
         if (lastVisiblePos > 0 && lastVisiblePos == _movies.size()-1) {
-            getPresenter().scrolledToEnd();
+            getPresenter().onScrolledToEnd();
         }
     }
 
     @Override
     public IMoviesPresenter createPresenter() {
         return new MoviesPresenter();
+    }
+
+    @Override
+    public String getQueryString() {
+        return _svSearchMoviesView.getQuery().toString();
     }
 
     @Override
@@ -233,9 +238,20 @@ public class MoviesFragment
     }
 
     @Override
+    public void displayError(int resId) {
+        Utils.showAlert(
+                getContext(),
+                getString(R.string.error),
+                getString(resId));
+        showEmptyState(false);
+    }
+
+    @Override
     public void displayError(String error) {
-        //TODO: Implement this
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        Utils.showAlert(
+                getContext(),
+                getString(R.string.error),
+                error);
         showEmptyState(false);
     }
 
@@ -244,7 +260,6 @@ public class MoviesFragment
         if (show)
             showEmptyState(false);
         _srMoviesPullRefresh.setRefreshing(show);
-        //_pbLoad.setVisibility(show? View.VISIBLE : View.GONE);
     }
 
     @Override

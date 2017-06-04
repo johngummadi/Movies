@@ -4,6 +4,10 @@
     <string name="search_movies">Search Movies</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
     <string name="developed_by">by John Gummadi (johngummadi@gmail.com)</string>
+    <string name="error_query_too_short">Query string is too short, please type at-least three characters.</string>
+    <string name="error_no_results">No results matching query were found.</string>
+    <string name="error">Error</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

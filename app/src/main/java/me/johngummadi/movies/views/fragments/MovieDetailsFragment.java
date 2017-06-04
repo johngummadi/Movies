@@ -109,7 +109,7 @@ public class MovieDetailsFragment
 
     public void update(Movie movie) {
         _movie = movie;
-        getPresenter().initialized(_movie);
+        getPresenter().onInitialized(_movie);
     }
 
     private void render() {

@@ -9,8 +9,7 @@ import me.johngummadi.movies.views.IMoviesView;
  */
 
 public interface IMoviesPresenter extends MvpPresenter<IMoviesView> {
-    void setSearchQuery(String query);
-    void searchButtonClicked();
-    void searchCleared();
-    void scrolledToEnd();
+    void onSearchButtonClicked();
+    void onSearchCleared();
+    void onScrolledToEnd();
 }

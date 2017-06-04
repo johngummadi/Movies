@@ -57,7 +57,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         if (holder._ivPosterThumb != null) {
             Glide.with(holder.itemView.getContext())
                     .load(movie.getPosterPathFull())
-                    .skipMemoryCache(true)
                     .placeholder(R.drawable.ic_movie)
                     .into(holder._ivPosterThumb);
         }
