@@ -78,6 +78,11 @@ public class MoviesPresenter extends MvpBasePresenter<IMoviesView> implements IM
     }
 
     @Override
+    public void onMovieSelected(Movie movie) {
+        getView().launchMovieDetails(movie);
+    }
+
+    @Override
     public void detachView(boolean retainInstance) {
         cancelSearchIfAppropriate();
         super.detachView(retainInstance);

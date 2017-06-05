@@ -15,6 +15,7 @@ public interface IMoviesView extends MvpView {
     void displayMovies(List<Movie> movies);
     void displayError(int resId);
     void displayError(String error);
+    void launchMovieDetails(Movie movie);
     void showLoadingSpinner(boolean show);
     void showSpinnerAtBottom(boolean show);
     // This just clears the list

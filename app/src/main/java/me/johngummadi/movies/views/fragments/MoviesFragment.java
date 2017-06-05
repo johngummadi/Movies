@@ -15,13 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.johngummadi.movies.R;
@@ -54,7 +51,7 @@ public class MoviesFragment
 
     // This is listener for Fragment events that Activity might be interested in
     public interface Listener {
-        void onMovieSelected(Movie movie);
+        void launchMovieDetailsView(Movie movie);
         // TODO: Add more events as needed
     }
 
@@ -118,10 +115,8 @@ public class MoviesFragment
         @Override
         public void onClick(int pos, View itemView) {
             Movie movie = _movies.get(pos);
-            //Toast.makeText(getContext(), movie.getTitle() + "\n\n" + movie.getOverview(), Toast.LENGTH_SHORT).show();
-            if (_listener != null) {
-                _listener.onMovieSelected(movie);
-            }
+            // Let the presenter decide what to do with movie selection
+            getPresenter().onMovieSelected(movie);
         }
     };
 
@@ -253,6 +248,17 @@ public class MoviesFragment
                 getString(R.string.error),
                 error);
         showEmptyState(false);
+    }
+
+    @Override
+    public void launchMovieDetails(Movie movie) {
+        /**
+         * Calling Activity to launch the Movie-Details because
+         * in tablet mode, we'd want to show the details in the same activity,
+         * but in different fragment. But on Phone, we want to show in another
+         * Activity.
+         */
+        _listener.launchMovieDetailsView(movie);
     }
 
     @Override

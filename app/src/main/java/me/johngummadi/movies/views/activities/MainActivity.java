@@ -18,7 +18,17 @@ public class MainActivity extends AppCompatActivity
         implements MoviesFragment.Listener, MovieDetailsFragment.Listener {
     //@BindView(R.id.svSearchMoviesView) SearchView _svSearchMoviesView;
 
+
     MoviesFragment _moviesFragment;
+
+    /**
+     * NOTE: This Activity (MainActivity) handles Movie details also in case of Tablet.
+     * Therefore this fragment reference is here. For tablet, we use layout in "land-large"
+     * folder. That ensures the fragment creation (see init() and launchMovieDetailsView() functions).
+     *
+     * In case of phone, the layout does not have the movie-details fragment, so
+     * MovieDetailsActivity will load "activity_movie_details.xml" directly.
+     */
     MovieDetailsFragment _movieDetailsFragment;
 
     @Override
@@ -50,12 +60,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMovieSelected(Movie movie) {
-        /**
-         * TODO: This should go back to the presenter and the
-         * preserter should decide what to do with the movie selection.
-         * For the lack of time, I just hacked this up.
-         */
+    public void launchMovieDetailsView(Movie movie) {
         if (_movieDetailsFragment != null && _movieDetailsFragment.isAdded()) {
             // This is a tablet, show the details on the side pane
             _movieDetailsFragment.update(movie);
