@@ -81,8 +81,8 @@ public class MovieDetailsFragment
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState == null)
             return;
-        _movie = savedInstanceState.getParcelable(ARG_MOVIE);
-        render();
+        Movie movie = savedInstanceState.getParcelable(ARG_MOVIE);
+        update(movie);
     }
 
     @Override
@@ -107,9 +107,5 @@ public class MovieDetailsFragment
     public void update(Movie movie) {
         _movie = movie;
         getPresenter().onInitialized(_movie);
-    }
-
-    private void render() {
-
     }
 }
