@@ -1,6 +1,5 @@
 package me.johngummadi.movies.views.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.johngummadi.movies.R;

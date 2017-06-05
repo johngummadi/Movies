@@ -16,8 +16,6 @@ import me.johngummadi.movies.views.fragments.MoviesFragment;
  */
 public class MainActivity extends AppCompatActivity
         implements MoviesFragment.Listener, MovieDetailsFragment.Listener {
-    //@BindView(R.id.svSearchMoviesView) SearchView _svSearchMoviesView;
-
 
     MoviesFragment _moviesFragment;
 

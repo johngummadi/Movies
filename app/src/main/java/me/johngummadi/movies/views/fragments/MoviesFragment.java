@@ -201,11 +201,6 @@ public class MoviesFragment
                 }
             });
         }
-
-
-
-        // TODO: Disabling voice for now
-        //_svSearchMoviesView.setVoice(false);
     }
 
     private void sendScrollEvents() {
@@ -290,6 +285,11 @@ public class MoviesFragment
         return (_movies.size() == 0);
     }
 
+    /**
+     * The "showEmptyState" method is called from within the View (MoviesFragment that is).
+     * It could be argued that this should be called from Presenter, but it is debatable.
+     * And it makes it unnecessarily complicated, so...
+     */
     private void showEmptyState(boolean show) {
         _rlEmptyStateMovies.setVisibility(show? View.VISIBLE : View.GONE);
     }
